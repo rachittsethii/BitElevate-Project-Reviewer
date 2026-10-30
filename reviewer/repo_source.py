@@ -14,9 +14,9 @@ import requests
 
 from .models import RepoSnapshot
 
-MAX_FILES = 14
-MAX_CHARS_PER_FILE = 6_000
-MAX_TOTAL_CHARS = 45_000
+MAX_FILES = 12
+MAX_CHARS_PER_FILE = 5_000
+MAX_TOTAL_CHARS = 30_000
 MAX_TREE_PATHS = 2_000
 
 SKIP_DIRS = {"node_modules", ".git", "venv", ".venv", "dist", "build", "__pycache__", ".next", "vendor", "target"}
