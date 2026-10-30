@@ -1,0 +1,84 @@
+{
+  "repo": "bitelevate-reviewer",
+  "overall_score": 51.0,
+  "readiness": "Developing",
+  "llm": {
+    "summary": "[MOCK MODE] Scores derived from static signals only; no LLM was called.",
+    "dimensions": [
+      {
+        "dimension": "code_quality",
+        "score": 3,
+        "rationale": "Heuristic from static signals (mock mode).",
+        "evidence": []
+      },
+      {
+        "dimension": "architecture",
+        "score": 3,
+        "rationale": "Heuristic from static signals (mock mode).",
+        "evidence": []
+      },
+      {
+        "dimension": "testing",
+        "score": 3,
+        "rationale": "Heuristic from static signals (mock mode).",
+        "evidence": []
+      },
+      {
+        "dimension": "documentation",
+        "score": 2,
+        "rationale": "Heuristic from static signals (mock mode).",
+        "evidence": []
+      },
+      {
+        "dimension": "security_hygiene",
+        "score": 1,
+        "rationale": "Heuristic from static signals (mock mode).",
+        "evidence": []
+      },
+      {
+        "dimension": "engineering_practices",
+        "score": 2,
+        "rationale": "Heuristic from static signals (mock mode).",
+        "evidence": []
+      }
+    ],
+    "top_fixes": [
+      {
+        "priority": "medium",
+        "file": null,
+        "action": "Add a CI workflow that runs the tests on every push."
+      }
+    ],
+    "strengths": [
+      "Has a README"
+    ]
+  },
+  "static_signals": {
+    "file_count": 19,
+    "languages": {
+      "Python": 11
+    },
+    "has_readme": true,
+    "readme_chars": 302,
+    "readme_has_setup": false,
+    "has_tests": true,
+    "test_file_count": 1,
+    "test_to_code_ratio": 0.1,
+    "has_ci": false,
+    "has_license": false,
+    "has_gitignore": true,
+    "has_dependency_manifest": true,
+    "has_env_example": true,
+    "committed_env_files": [],
+    "possible_secrets": [
+      "tests/test_reviewer.py (generic_api_key)"
+    ],
+    "tree_truncated": false
+  },
+  "dropped_evidence": [],
+  "model": "mock-heuristic",
+  "needs_mentor_review": true,
+  "mentor_flags": [
+    "Possible committed secrets / .env file -- verify and rotate keys."
+  ]
+}

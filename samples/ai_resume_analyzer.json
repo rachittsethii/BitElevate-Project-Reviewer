@@ -1,0 +1,128 @@
+{
+  "repo": "rachittsethii/measured-rag-studio",
+  "overall_score": 39.0,
+  "readiness": "Needs rework",
+  "llm": {
+    "summary": "Measured RAG Studio implements a hybrid dense-sparse RAG pipeline with reciprocal rank fusion and local LLM evaluation. While the modular concept and README documentation are strong, the project suffers from a non-functional main script due to mismatched function imports, hardcoded external URLs, UI coupling in core modules, committed build artifacts, and an absence of automated tests.",
+    "dimensions": [
+      {
+        "dimension": "code_quality",
+        "score": 2,
+        "rationale": "Code in src/ is cleanly written with type annotations, but main.py fails immediately upon execution because it imports non-existent functions from the src modules.",
+        "evidence": [
+          "main.py",
+          "src/loader.py",
+          "src/retriever.py",
+          "src/evaluate.py"
+        ]
+      },
+      {
+        "dimension": "architecture",
+        "score": 3,
+        "rationale": "Responsibilities are divided across loader, retriever, chain, and evaluation modules, but framework coupling exists with Streamlit caching inside retriever logic and configuration is hardcoded.",
+        "evidence": [
+          "src/retriever.py",
+          "src/chain.py",
+          "app.py"
+        ]
+      },
+      {
+        "dimension": "testing",
+        "score": 0,
+        "rationale": "No unit, integration, or regression test suites exist in the repository.",
+        "evidence": [
+          "main.py"
+        ]
+      },
+      {
+        "dimension": "documentation",
+        "score": 3,
+        "rationale": "README includes a clear architecture diagram, results summary, and quickstart commands, but omits prerequisites for the Ollama setup and ngrok proxy requirements.",
+        "evidence": [
+          "README.md",
+          "src/chain.py"
+        ]
+      },
+      {
+        "dimension": "security_hygiene",
+        "score": 2,
+        "rationale": "A live ngrok tunnel URL is hardcoded into the source code, user upload paths are constructed without sanitization, and no environment variable management or .gitignore is configured.",
+        "evidence": [
+          "src/chain.py",
+          "app.py"
+        ]
+      },
+      {
+        "dimension": "engineering_practices",
+        "score": 2,
+        "rationale": "The repository includes a requirements file, but it commits binary .pyc files and .DS_Store, lacks a .gitignore file, contains no CI workflow, and has no open-source license.",
+        "evidence": [
+          ".DS_Store",
+          "src/__pycache__/__init__.cpython-314.pyc",
+          "requirements.txt"
+        ]
+      }
+    ],
+    "top_fixes": [
+      {
+        "priority": "high",
+        "file": "main.py",
+        "action": "Fix broken imports (load_and_chunk_docs, build_retrievers, evaluate_retrieval) to match the actual function signatures defined across src/loader.py, src/retriever.py, and src/evaluate.py."
+      },
+      {
+        "priority": "high",
+        "file": "src/chain.py",
+        "action": "Extract the hardcoded ngrok base URL into an environment variable loaded via python-dotenv with a configurable local fallback (e.g., http://localhost:11434)."
+      },
+      {
+        "priority": "medium",
+        "file": null,
+        "action": "Add a .gitignore file containing __pycache__/, *.pyc, .DS_Store, and untracked chat/result dumps, then remove committed .pyc files from git tracking."
+      },
+      {
+        "priority": "medium",
+        "file": "src/retriever.py",
+        "action": "Remove Streamlit imports and the @st.cache_resource decorator from core library code, moving UI-specific caching up into app.py."
+      },
+      {
+        "priority": "low",
+        "file": null,
+        "action": "Add pytest tests verifying that CustomEnsembleRetriever correctly fuses scores and ranks documents using reciprocal rank fusion."
+      }
+    ],
+    "strengths": [
+      "Comprehensive README featuring a Mermaid pipeline diagram and quantitative benchmark comparisons.",
+      "Custom implementation of Reciprocal Rank Fusion (CustomEnsembleRetriever) combining dense FAISS embeddings with BM25 keyword search.",
+      "Clear separation of concerns across document ingestion, retrieval mechanics, prompt chains, and benchmark evaluation."
+    ]
+  },
+  "static_signals": {
+    "file_count": 20,
+    "languages": {
+      "Python": 7
+    },
+    "has_readme": true,
+    "readme_chars": 2437,
+    "readme_has_setup": true,
+    "has_tests": false,
+    "test_file_count": 0,
+    "test_to_code_ratio": 0.0,
+    "has_ci": false,
+    "has_license": false,
+    "has_gitignore": false,
+    "has_dependency_manifest": true,
+    "has_env_example": false,
+    "committed_env_files": [],
+    "possible_secrets": [],
+    "tree_truncated": true
+  },
+  "dropped_evidence": [
+    "tests/test_retriever.py"
+  ],
+  "model": "gemini-3.8-flash",
+  "needs_mentor_review": true,
+  "mentor_flags": [
+    "1 cited file path(s) did not exist and were removed -- review may be unreliable.",
+    "Repo was large; only a sample of files was reviewed."
+  ]
+}
